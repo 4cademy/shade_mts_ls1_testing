@@ -1,7 +1,7 @@
 OBJS	= main.o utils.o objective_functions.o shade.o mts_ls1.o
 SOURCE	= main.c utils.c objective_functions.c shade.c mts_ls1.c
 HEADER	= settings.h utils.h objective_functions.h shade.h mts_ls1.h
-OUT	= ga.out
+OUT	= a.out
 CC	 = gcc
 FLAGS	 = -g -c -Wall -Werror
 LFLAGS	 = -lm

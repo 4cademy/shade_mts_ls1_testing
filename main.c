@@ -28,12 +28,12 @@ int main()
         for (unsigned int j = 0; j < DIM; j++) {
             population[i][j] = randf_range(MIN, MAX);
         }
+        fitness[i] = objective_function_1(population[i]);
     }
     float current_best_solution[DIM] = {(MAX + MIN) / 2.0f};
     float current_best_fitness = objective_function_1(current_best_solution);
 
-    printf("%f", current_best_fitness);
-    return 0;
+    printf("%f\n", current_best_fitness);
 
     //ToDo: first LS step
     // mts_ls1(25000, current_best_solution);
@@ -52,7 +52,7 @@ int main()
     // Main loop
     while (fe < FUNCTION_EVALS) {
         // SHADE
-        shade(population, fitness, current_best_solution, current_best_fitness, 2500);
+        shade(population, fitness, current_best_solution, &current_best_fitness, 2500);
         fe += 2500;
 
         improvement = (previous_best_fitness - current_best_fitness) / previous_best_fitness;
@@ -60,7 +60,7 @@ int main()
 
         // LS
         // ToDo: LS
-        fe += 25000;
+        // fe += 25000;
 
         if (current_best_fitness < best_fitness) {
             // replace best individual

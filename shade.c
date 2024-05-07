@@ -8,6 +8,7 @@
 #include "objective_functions.h"
 #include <math.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 float m_cr[H];             // memory for cr
 float m_f[H];              // memory for f
@@ -140,7 +141,7 @@ void generate_trial_vector(float trial_vector[DIM], volatile float population[PO
     }
 }
 
-void shade(volatile float population[POPSIZE][DIM], volatile float fitness[POPSIZE], volatile float best_solution[DIM], volatile float best_fitness, int function_evals){
+void shade(volatile float population[POPSIZE][DIM], volatile float fitness[POPSIZE], volatile float best_solution[DIM], volatile float* best_fitness, int function_evals){
     int fe = 0;
     while (fe < function_evals) {
 
@@ -161,7 +162,7 @@ void shade(volatile float population[POPSIZE][DIM], volatile float fitness[POPSI
         for (int i = 0; i < DIM; i++) {
             population[max_index][i] = best_solution[i];
         }
-        fitness[max_index] = best_fitness;
+        fitness[max_index] = *best_fitness;
 
         // generate trial population
         for (int i = 0; i < POPSIZE; ++i) {
@@ -239,7 +240,7 @@ void shade(volatile float population[POPSIZE][DIM], volatile float fitness[POPSI
                 best_index = i;
             }
         }
-        best_fitness = fitness[best_index];
+        *best_fitness = fitness[best_index];
         for (int i = 1; i < DIM; ++i) {
             if (fitness[i] < fitness[best_index]) {
                 best_solution[i] = population[best_index][i];
