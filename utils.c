@@ -4,12 +4,13 @@
 
 #include "utils.h"
 #include "settings.h"
-#include "math.h"
+
+#include <math.h>
+#ifndef  M_PI
+#define  M_PI  3.1415926535897932384626433
+#endif
 
 #include <stdlib.h>
-
-#include <s2app.h>
-#include <spinn_log.h>
 
 int get_min_index(volatile float fitness[POPSIZE]){
     // Find index of individual with minimum fitness

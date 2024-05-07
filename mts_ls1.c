@@ -1,16 +1,15 @@
 //
 // Created by beyer on 02.04.24.
 //
+#define _GNU_SOURCE
+
+#include <math.h>
+#include <stdlib.h>
 
 #include "mts_ls1.h"
 #include "settings.h"
 #include "objective_functions.h"
-#include "math.h"
-#include <stdlib.h>
 #include "utils.h"
-
-#include <s2app.h>
-#include <spinn_log.h>
 
 void next_permutation(int* array, int length){
     for (int i = length-1; i >= 0; --i){
@@ -24,7 +23,7 @@ void next_permutation(int* array, int length){
     }
 }
 
-int compare_with_thunk(void* array_to_sort_by, const void* a, const void* b)
+int compare_with_thunk(const void* a, const void* b, void* array_to_sort_by)
 {
     int int_a = * ( (int*) a );
     int int_b = * ( (int*) b );
@@ -117,7 +116,7 @@ void mts_ls1(unsigned maxevals, volatile float sol[DIM]){
 
 
     iota(dim_sorted, DIM, 0);
-    qsort_r( dim_sorted, DIM, sizeof(float), improvement, compare_with_thunk );
+    qsort_r( dim_sorted, DIM, sizeof(float), compare_with_thunk, improvement);
 
     int i, d = 0, next_d, next_i;
     while( totalevals < maxevals ){
@@ -139,7 +138,7 @@ void mts_ls1(unsigned maxevals, volatile float sol[DIM]){
                 for(int j = 0; j < DIM; j++){
                     dim_sorted[j] = j;
                 }
-                qsort_r( dim_sorted, DIM, sizeof(float), improvement, compare_with_thunk );
+                qsort_r( dim_sorted, DIM, sizeof(float), compare_with_thunk, improvement);
             }
         } else {
             SR[i] /= 2.0;

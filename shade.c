@@ -6,11 +6,8 @@
 #include "settings.h"
 #include "utils.h"
 #include "objective_functions.h"
-#include "math.h"
+#include <math.h>
 #include <stdlib.h>
-
-#include <s2app.h>
-#include <spinn_log.h>
 
 float m_cr[H];             // memory for cr
 float m_f[H];              // memory for f
