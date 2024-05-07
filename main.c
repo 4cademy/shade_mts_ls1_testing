@@ -58,6 +58,8 @@ int main()
         improvement = (previous_best_fitness - current_best_fitness) / previous_best_fitness;
         previous_best_fitness = current_best_fitness;
 
+        printf("FE: %d, Best fitness: %f, Improvement: %f\n", fe, current_best_fitness, improvement);
+
         // LS
         // ToDo: LS
         // fe += 25000;
