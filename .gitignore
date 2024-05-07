@@ -1,3 +1,3 @@
-ga.out
-a.out
+*.out
+*.o
 .vscode/launch.json
