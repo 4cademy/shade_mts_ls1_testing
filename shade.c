@@ -248,3 +248,30 @@ void shade(volatile float population[POPSIZE][DIM], volatile float fitness[POPSI
         }
     }
 }
+
+void shade_reset(volatile float population[POPSIZE][DIM], volatile float fitness[POPSIZE], volatile float current_best_solution[DIM], volatile float* current_best_fitness) {
+    // select random solution from population
+    int random_index = randi_range(0, POPSIZE - 1);
+    volatile float* random_solution = population[random_index];
+
+    // reset current best
+    for (int i = 0; i < DIM; i++) {
+        float rand = randf_normal(0, 1);
+        current_best_solution[i] = random_solution[i] + rand * 0.1f * (MAX-MIN);
+        // clip to bounds
+        current_best_solution[i] = fminf(current_best_solution[i], MAX);
+        current_best_solution[i] = fmaxf(current_best_solution[i], MIN);
+
+        *current_best_fitness = objective_function_1(current_best_solution);
+    }
+
+    // randomly reset population
+    for (unsigned int i = 0; i < POPSIZE; i++){
+        for (unsigned int j = 0; j < DIM; j++) {
+            population[i][j] = randf_range(MIN, MAX);
+        }
+        fitness[i] = objective_function_1(population[i]);
+    }
+
+    // ToDo: reset LS parameters (non to reset for MTS-LS1)
+}

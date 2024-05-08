@@ -38,7 +38,7 @@ int main()
     printf("%f\n", current_best_fitness);
 
     //ToDo: first LS step
-    // mts_ls1(25000, current_best_solution);
+    mts_ls1(25000, current_best_solution);
 
     // copy individual
     for (unsigned int j = 0; j < DIM; j++) {
@@ -54,8 +54,8 @@ int main()
     // Main loop
     while (fe < FUNCTION_EVALS) {
         // SHADE
-        shade(population, fitness, current_best_solution, &current_best_fitness, 2500);
-        fe += 2500;
+        shade(population, fitness, current_best_solution, &current_best_fitness, 25000);
+        fe += 25000;
 
         improvement = (previous_best_fitness - current_best_fitness) / previous_best_fitness;
         previous_best_fitness = current_best_fitness;
@@ -64,7 +64,8 @@ int main()
 
         // LS
         // ToDo: LS
-        // fe += 25000;
+        mts_ls1(25000, current_best_solution);
+        fe += 25000;
 
         if (current_best_fitness < best_fitness) {
             // replace best individual
@@ -83,7 +84,7 @@ int main()
 
         if (reset_counter >= 3) {
             reset_counter = 0;
-            // ToDo: RESET
+            shade_reset(population, fitness, current_best_solution, &current_best_fitness);
         }
     }
     
