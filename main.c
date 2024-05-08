@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <stdio.h>
+#include <time.h>
 #include "settings.h"
 #include "objective_functions.h"
 #include "shade.h"
@@ -18,6 +19,7 @@ float trial_fitness[POPSIZE];
 
 int main()
 {
+    srand(time(NULL));
     uint32_t check = 0xcafebabe;
     
     // initialize SHADE
