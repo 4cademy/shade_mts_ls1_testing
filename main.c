@@ -65,6 +65,8 @@ int main()
         shade(population, fitness, current_best_solution, &current_best_fitness, STEP_SIZE);
         fe += STEP_SIZE;
 
+        printf("FE: %d, Best fitness: %f\n", fe, current_best_fitness);
+
         // LS
         // ToDo: LS
         mts_ls1(STEP_SIZE, current_best_solution);
