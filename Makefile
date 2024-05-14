@@ -9,25 +9,25 @@ LFLAGS	 = -lm
 all: $(OBJS)
 	$(CC) -g $(OBJS) -o $(OUT) $(LFLAGS)
 
-main.o: main.c
+main.o: main.c settings.h
 	$(CC) $(FLAGS) main.c 
 
-utils.o: utils.c
+utils.o: utils.c settings.h
 	$(CC) $(FLAGS) utils.c 
 
-objective_functions.o: objective_functions.c
+objective_functions.o: objective_functions.c settings.h
 	$(CC) $(FLAGS) objective_functions.c 
 
-shade.o: shade.c
+shade.o: shade.c settings.h
 	$(CC) $(FLAGS) shade.c 
 
-mts_ls1.o: mts_ls1.c
+mts_ls1.o: mts_ls1.c settings.h
 	$(CC) $(FLAGS) mts_ls1.c 
 
 
 clean:
 	rm -f $(OBJS) $(OUT)
 
-run: $(OUT)
+run:
 	make all
 	./$(OUT)

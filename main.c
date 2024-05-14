@@ -19,6 +19,14 @@ float trial_fitness[POPSIZE];
 
 int main()
 {
+    printf("POPSIZE; %d\n", POPSIZE);
+    printf("H: %d\n", H);
+    printf("DIM: %d\n", DIM);
+    printf("MIN: %d\n", MIN);
+    printf("MAX: %d\n", MAX);
+    printf("FUNCTION_EVALS: %d\n", FUNCTION_EVALS);
+    printf("STEP_SIZE: %d\n", STEP_SIZE);
+
     srand(time(NULL));
     uint32_t check = 0xcafebabe;
     
@@ -38,7 +46,7 @@ int main()
     printf("%f\n", current_best_fitness);
 
     //ToDo: first LS step
-    mts_ls1(25000, current_best_solution);
+    mts_ls1(STEP_SIZE, current_best_solution);
 
     // copy individual
     for (unsigned int j = 0; j < DIM; j++) {
@@ -46,7 +54,7 @@ int main()
     }
     best_fitness = current_best_fitness;
 
-    int fe = 25000;
+    int fe = STEP_SIZE;
     float improvement;
     int reset_counter = 0;
     float previous_best_fitness = current_best_fitness;
@@ -54,18 +62,22 @@ int main()
     // Main loop
     while (fe < FUNCTION_EVALS) {
         // SHADE
-        shade(population, fitness, current_best_solution, &current_best_fitness, 25000);
-        fe += 25000;
-
-        improvement = (previous_best_fitness - current_best_fitness) / previous_best_fitness;
-        previous_best_fitness = current_best_fitness;
-
-        printf("FE: %d, Best fitness: %f, Improvement: %f\n", fe, current_best_fitness, improvement);
+        shade(population, fitness, current_best_solution, &current_best_fitness, STEP_SIZE);
+        fe += STEP_SIZE;
 
         // LS
         // ToDo: LS
-        mts_ls1(25000, current_best_solution);
-        fe += 25000;
+        mts_ls1(STEP_SIZE, current_best_solution);
+        fe += STEP_SIZE;
+
+        if (previous_best_fitness == 0.0f) {
+            improvement = 0.0f;
+        } else {
+            improvement = (previous_best_fitness - current_best_fitness) / previous_best_fitness;
+        }
+        previous_best_fitness = current_best_fitness;
+
+        printf("FE: %d, Best fitness: %f, Improvement: %f\n", fe, current_best_fitness, improvement);
 
         if (current_best_fitness < best_fitness) {
             // replace best individual
