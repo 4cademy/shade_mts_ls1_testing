@@ -111,7 +111,7 @@ void generate_trial_vector(float trial_vector[DIM], volatile float population[PO
     }
     //current-to-pbest/1/bin
     int indices[POPSIZE];
-    int p = randi_range(0, (int)(POPSIZE * 0.2) - 1);
+    int p = randi_range(0, (int)(POPSIZE * 0.2f) - 1);
     if (p < 2){
         p = 2;
     }

@@ -43,10 +43,12 @@ int main()
     float current_best_solution[DIM] = {(MAX + MIN) / 2.0f};
     float current_best_fitness = objective_function_1(current_best_solution);
 
-    printf("%f\n", current_best_fitness);
+    printf("Init: %f\n", current_best_fitness);
 
     //ToDo: first LS step
-    mts_ls1(STEP_SIZE, current_best_solution);
+    mts_ls1(STEP_SIZE, current_best_solution, &current_best_fitness);
+
+    printf("First LS: %f\n", current_best_fitness);
 
     // copy individual
     for (unsigned int j = 0; j < DIM; j++) {
@@ -68,8 +70,7 @@ int main()
         printf("FE: %d, Best fitness: %f\n", fe, current_best_fitness);
 
         // LS
-        // ToDo: LS
-        mts_ls1(STEP_SIZE, current_best_solution);
+        mts_ls1(STEP_SIZE, current_best_solution, &current_best_fitness);
         fe += STEP_SIZE;
 
         if (previous_best_fitness == 0.0f) {

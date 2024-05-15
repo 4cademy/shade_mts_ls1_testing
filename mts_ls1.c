@@ -34,7 +34,7 @@ int compare_with_thunk(const void* a, const void* b, void* array_to_sort_by)
     else return 1;
 }
 
-int mts_ls1_improve_dim(volatile float* sol, float* best_fitness, unsigned dim_to_improve, float* SR){
+int mts_ls1_improve_dim(volatile float* sol, volatile float* best_fitness, unsigned dim_to_improve, float* SR){
     float newsol[DIM];
     for(int j = 0; j < DIM; j++){
         newsol[j] = sol[j];
@@ -71,9 +71,8 @@ int mts_ls1_improve_dim(volatile float* sol, float* best_fitness, unsigned dim_t
     return evals;
 }
 
-void mts_ls1(unsigned maxevals, volatile float sol[DIM]){
+void mts_ls1(unsigned maxevals, volatile float sol[DIM], volatile float* best_fitness){
     unsigned totalevals = 0;
-    float best_fitness = objective_function_1(sol);
 
     // search range
     float SR[DIM] = {(MAX - MIN) * 0.4f};
@@ -84,7 +83,7 @@ void mts_ls1(unsigned maxevals, volatile float sol[DIM]){
     for(int i = 0; i < DIM; i++){
         current_best_sol[i] = sol[i];
     }
-    float current_best_fitness = best_fitness;
+    float current_best_fitness = *best_fitness;
 
     float improvement[DIM] = {0.0f};
 
@@ -98,16 +97,16 @@ void mts_ls1(unsigned maxevals, volatile float sol[DIM]){
         int dim_to_improve;
         for(int i = 0; i < DIM; i++){
             dim_to_improve = dim_sorted[i];
-            evals = mts_ls1_improve_dim(sol, &best_fitness, dim_to_improve, SR);
+            evals = mts_ls1_improve_dim(sol, best_fitness, dim_to_improve, SR);
             totalevals += evals;
-            improve = fmax(current_best_fitness - best_fitness, 0.0f);
+            improve = fmax(current_best_fitness - *best_fitness, 0.0f);
             improvement[i] = improve;
 
             if( improve > 0.0 ){
                 for(int j = 0; j < DIM; j++){
                     current_best_sol[j] = sol[j];
                 }
-                current_best_fitness = best_fitness;
+                current_best_fitness = *best_fitness;
             } else {
                 SR[i] /= 2.0f;
             }
@@ -121,9 +120,9 @@ void mts_ls1(unsigned maxevals, volatile float sol[DIM]){
     int i, d = 0, next_d, next_i;
     while( totalevals < maxevals ){
         i = dim_sorted[d];
-        evals = mts_ls1_improve_dim(sol, &best_fitness, i, SR);
+        evals = mts_ls1_improve_dim(sol, best_fitness, i, SR);
         totalevals += evals;
-        improve = fmax(current_best_fitness - best_fitness, 0.0f);
+        improve = fmax(current_best_fitness - *best_fitness, 0.0f);
         improvement[i] = improve;
         next_d = (d+1)%DIM;
         next_i = dim_sorted[next_d];
@@ -132,7 +131,7 @@ void mts_ls1(unsigned maxevals, volatile float sol[DIM]){
             for(int j = 0; j < DIM; j++){
                 current_best_sol[j] = sol[j];
             }
-            current_best_fitness = best_fitness;
+            current_best_fitness = *best_fitness;
 
             if( improvement[i] < improvement[next_i] ){
                 for(int j = 0; j < DIM; j++){
@@ -151,4 +150,5 @@ void mts_ls1(unsigned maxevals, volatile float sol[DIM]){
     for(int j = 0; j < DIM; j++){
         sol[j] = current_best_sol[j];
     }
+    *best_fitness = current_best_fitness;
 }
