@@ -42,7 +42,7 @@ int mts_ls1_improve_dim(volatile float* sol, volatile float* best_fitness, unsig
 
     newsol[dim_to_improve] -= SR[dim_to_improve];
 
-    float fitness_newsol = objective_function_1(newsol);
+    float fitness_newsol = (*objective_function[FUNC_NO])(newsol);
 
     int evals = 1;
 
@@ -58,7 +58,7 @@ int mts_ls1_improve_dim(volatile float* sol, volatile float* best_fitness, unsig
         newsol[dim_to_improve] = fmin(newsol[dim_to_improve], MAX);
         newsol[dim_to_improve] = fmax(newsol[dim_to_improve], MIN);
 
-        fitness_newsol = objective_function_1(newsol);
+        fitness_newsol = (*objective_function[FUNC_NO])(newsol);
         evals++;
 
         if( fitness_newsol < *best_fitness ){

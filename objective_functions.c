@@ -52,3 +52,13 @@ float objective_function_1(volatile float solution[DIM]) {
 
     return result;
 }
+
+// objective function 1
+float objective_function_2(volatile float solution[DIM]) {
+    float result = 0;
+    
+
+    return result;
+}
+
+float (*objective_function[2])(volatile float solution[DIM]) = {objective_function_1, objective_function_2};

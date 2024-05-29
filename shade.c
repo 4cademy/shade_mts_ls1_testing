@@ -193,7 +193,7 @@ void shade(volatile float population[POPSIZE][DIM], volatile float fitness[POPSI
             }
 
             // evaluate trial vector
-            trial_fitness[i] = objective_function_1(trial_vector);
+            trial_fitness[i] = (*objective_function[FUNC_NO])(trial_vector);
             fe++;
         }
 
@@ -262,7 +262,7 @@ void shade_reset(volatile float population[POPSIZE][DIM], volatile float fitness
         current_best_solution[i] = fminf(current_best_solution[i], MAX);
         current_best_solution[i] = fmaxf(current_best_solution[i], MIN);
 
-        *current_best_fitness = objective_function_1(current_best_solution);
+        *current_best_fitness = (*objective_function[FUNC_NO])(current_best_solution);
     }
 
     // randomly reset population
@@ -270,7 +270,7 @@ void shade_reset(volatile float population[POPSIZE][DIM], volatile float fitness
         for (unsigned int j = 0; j < DIM; j++) {
             population[i][j] = randf_range(MIN, MAX);
         }
-        fitness[i] = objective_function_1(population[i]);
+        fitness[i] = (*objective_function[FUNC_NO])(population[i]);
     }
 
     // ToDo: reset LS parameters (non to reset for MTS-LS1)

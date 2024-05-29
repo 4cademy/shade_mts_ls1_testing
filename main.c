@@ -38,10 +38,10 @@ int main()
         for (unsigned int j = 0; j < DIM; j++) {
             population[i][j] = randf_range(MIN, MAX);
         }
-        fitness[i] = objective_function_1(population[i]);
+        fitness[i] = (*objective_function[FUNC_NO])(population[i]);
     }
     float current_best_solution[DIM] = {(MAX + MIN) / 2.0f};
-    float current_best_fitness = objective_function_1(current_best_solution);
+    float current_best_fitness = (*objective_function[FUNC_NO])(current_best_solution);
 
     printf("Init: %f\n", current_best_fitness);
 
