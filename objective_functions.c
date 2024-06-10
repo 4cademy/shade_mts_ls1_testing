@@ -150,7 +150,7 @@ float objective_function_4(volatile float solution[DIM]) {
 
     // Shift
     for (unsigned i = 0; i < DIM; i++) {
-        y[i] = solution[i] - xopt4[i];
+        y[i] = solution[i] - F4_xopt[i];
     }
 
     // rest ...
