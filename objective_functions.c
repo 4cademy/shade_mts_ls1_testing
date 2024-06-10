@@ -154,6 +154,7 @@ float objective_function_4(volatile float solution[DIM]) {
     }
 
     // rest ...
+    result = y[0]; // remove this
 
     return result;
 }
