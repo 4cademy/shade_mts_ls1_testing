@@ -12,6 +12,6 @@
 #define MAX 100         // upper bound of the search space ATTENTION: depending on the function
 #define FUNCTION_EVALS 3000000
 #define STEP_SIZE 25000
-#define FUNC_NO 0       // start at 0 -> 0 = objective_function_1 from CEC2013 benchmark
+#define FUNC_NO 3       // start at 0 -> 0 = objective_function_1 from CEC2013 benchmark
 
 #endif //WORK_SETTINGS_H
